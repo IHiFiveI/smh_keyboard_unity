@@ -5,9 +5,6 @@ ScriptsOnlyBuild:
     - playerMovement
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    Unity.Timeline.Editor.dll:
-    - TimelinePreferences
-    - TimelineProjectSettings
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -43,9 +40,9 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 17520}
+      Script: {instanceID: 1656}
     - Class: 114
-      Script: {instanceID: 18272}
+      Script: {instanceID: 3258}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 136
@@ -117,6 +114,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: Selectable
+  - hash:
+      serializedVersion: 2
+      Hash: 655675a941ea756088027703b43352a4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: mouseMovement
   - hash:
       serializedVersion: 2
       Hash: 3164bc883ff663a5cdb32d1ef7e7c0c5
@@ -407,6 +410,12 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
+      Hash: 742d45e406d80b68f1c31b743c1853f4
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: playerMovement
+  - hash:
+      serializedVersion: 2
       Hash: 748dd2a2a28da4e618912da5ac45684b
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -477,18 +486,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextContainer
-  - hash:
-      serializedVersion: 2
-      Hash: 655675a941ea756088027703b43352a4
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: mouseMovement
-  - hash:
-      serializedVersion: 2
-      Hash: 742d45e406d80b68f1c31b743c1853f4
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: playerMovement
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
