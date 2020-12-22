@@ -14,7 +14,7 @@ public class mouseTweaks : MonoBehaviour
         {
             if (Time.time - lastClickTimeLeft < DOUBLE_CLICK_TIME)
             {
-                player.GetComponent<playerMovement>().Dash(false);
+                player.GetComponent<playerMovement>().Dash(1);
             }
             lastClickTimeLeft = Time.time;
         }
@@ -22,7 +22,7 @@ public class mouseTweaks : MonoBehaviour
         {
             if (Time.time - lastClickTimeRight < DOUBLE_CLICK_TIME)
             {
-                player.GetComponent<playerMovement>().Dash(true);
+                player.GetComponent<playerMovement>().Dash(2);
             }
             lastClickTimeRight = Time.time;
         }

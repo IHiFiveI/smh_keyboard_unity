@@ -16,31 +16,53 @@ public class playerMovement : MonoBehaviour
     [SerializeField] private Transform groundChecker;
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private GameObject animeLines;
-    [SerializeField] private ParticleSystem dashEffectRight;
-    [SerializeField] private ParticleSystem dashEffectLeft;
+    [SerializeField] private Animation SlideAnimation;
+    [SerializeField] private Animation BodyAnimation;
+
+    private float dashAnimationTimer = 0;
+    private int dash = 0;
     private float dashTimer = 0.0f;
-    public void Dash(bool directon)
+    public void Dash(int directon)
     {
         if (dashTimer > 3.0f)
         {
-            if (directon)
+            dash = directon;
+        }
+        else
+        {
+            dash = 0;
+        }
+    }
+
+    private void DashAnimation()
+    {
+        if (dashTimer > 3.0f)
+        {
+            if (dash == 1 || dash == 2)
             {
-                dashEffectRight.Play();
-                controller.Move(transform.right * currentSpeed * 200 * Time.deltaTime);
+                if (dashAnimationTimer <= 0)
+                {
+                    SlideAnimation.Play(((dash == 1) ? "SlideEffectLeft" : "SlideEffectRight"));
+                }
+                if (dashAnimationTimer < 0.3f)
+                {
+                    controller.Move(transform.right * ((dash == 1) ? (-runSpeed * 2) : runSpeed * 2) * Time.deltaTime);
+                    dashAnimationTimer += Time.deltaTime;
+                }
+                else
+                {
+                    dash = 0;
+                    dashTimer = 0;
+                    dashAnimationTimer = 0;
+                }
             }
-            else
-            {
-                dashEffectLeft.Play();
-                controller.Move(transform.right * currentSpeed * -200 * Time.deltaTime);
-            }
-            dashTimer = 0.0f;
-            dashEffectLeft.Pause();
-            dashEffectRight.Pause();
+            dashTimer += Time.deltaTime;
         }
     }
 
     public void Move()
     {
+        BodyAnimation.Play();
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
         if (z > 0)
@@ -54,7 +76,7 @@ public class playerMovement : MonoBehaviour
             animeLines.SetActive(false);
         }
 
-        if (walkingTimer > 7.0f)
+        if (walkingTimer > 4.0f)
         {
             currentSpeed = runSpeed;
             animeLines.SetActive(true);
@@ -65,10 +87,10 @@ public class playerMovement : MonoBehaviour
 
         controller.Move(move * currentSpeed * Time.deltaTime);
     }
-    void Start()
+
+    private void Start()
     {
-        dashEffectLeft.Pause();
-        dashEffectRight.Pause();
+        animeLines.SetActive(false);
     }
 
     void Update()
@@ -82,6 +104,10 @@ public class playerMovement : MonoBehaviour
         }
 
         Move();
+
+        DashAnimation();
+
+        Debug.Log(dashTimer);
 
         velocity.y += gravity * Time.deltaTime;
 
