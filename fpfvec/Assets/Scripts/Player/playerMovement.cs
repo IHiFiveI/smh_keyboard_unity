@@ -36,27 +36,23 @@ public class playerMovement : MonoBehaviour
 
     private void DashAnimation()
     {
-        if (dashTimer > 3.0f)
+        if (dashTimer > 3.0f && dash != 0)
         {
-            if (dash == 1 || dash == 2)
+            if (dashAnimationTimer <= 0)
             {
-                if (dashAnimationTimer <= 0)
-                {
-                    SlideAnimation.Play(((dash == 1) ? "SlideEffectLeft" : "SlideEffectRight"));
-                }
-                if (dashAnimationTimer < 0.3f)
-                {
-                    controller.Move(transform.right * ((dash == 1) ? (-runSpeed * 2) : runSpeed * 2) * Time.deltaTime);
-                    dashAnimationTimer += Time.deltaTime;
-                }
-                else
-                {
-                    dash = 0;
-                    dashTimer = 0;
-                    dashAnimationTimer = 0;
-                }
+                SlideAnimation.Play(((dash == 1) ? "SlideEffectLeft" : "SlideEffectRight"));
             }
-            dashTimer += Time.deltaTime;
+            if (dashAnimationTimer < 0.3f)
+            {
+                controller.Move(transform.right * ((dash == 1) ? (-runSpeed * 2) : runSpeed * 2) * Time.deltaTime);
+                dashAnimationTimer += Time.deltaTime;
+            }
+            else
+            {
+                dash = 0;
+                dashTimer = 0;
+                dashAnimationTimer = 0;
+            }
         }
     }
 
@@ -106,8 +102,6 @@ public class playerMovement : MonoBehaviour
         Move();
 
         DashAnimation();
-
-        Debug.Log(dashTimer);
 
         velocity.y += gravity * Time.deltaTime;
 
