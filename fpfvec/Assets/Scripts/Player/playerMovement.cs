@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public class playerMovement : MonoBehaviour
 {
@@ -44,8 +45,8 @@ public class playerMovement : MonoBehaviour
             }
             if (dashAnimationTimer < 0.3f)
             {
-                controller.Move(transform.right * ((dash == 1) ? (-runSpeed * 2) : runSpeed * 2) * Time.deltaTime);
-                dashAnimationTimer += Time.deltaTime;
+                controller.Move(transform.right * ((dash == 1) ? (-runSpeed * 2) : runSpeed * 2) * Time.unscaledDeltaTime);
+                dashAnimationTimer += Time.unscaledDeltaTime;
             }
             else
             {
@@ -63,7 +64,7 @@ public class playerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         if (z > 0)
         {
-            walkingTimer += Time.deltaTime;
+            walkingTimer += Time.unscaledDeltaTime;
         }
         else
         {
@@ -81,7 +82,7 @@ public class playerMovement : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * currentSpeed * Time.deltaTime);
+        controller.Move(move * currentSpeed * Time.unscaledDeltaTime);
     }
 
     private void Start()
@@ -91,20 +92,30 @@ public class playerMovement : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("regular");
         isGrounded = Physics.CheckSphere(groundChecker.position, groundDistance, groundMask);
-        dashTimer += Time.deltaTime;
+        dashTimer += Time.unscaledDeltaTime;
 
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
 
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            Time.timeScale = 0.0f;
+        }
+        if (Input.GetKeyUp(KeyCode.C))
+        {
+            Time.timeScale = 1.0f;
+        }
+
         Move();
 
         DashAnimation();
 
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += gravity * Time.unscaledDeltaTime;
 
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.unscaledDeltaTime);
     }
 }
